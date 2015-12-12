@@ -5,11 +5,21 @@
 
 // But instead we're going to implement it from scratch:
 var getElementsByClassName = function(className){
-  // your code here
+  var docElements = document.getElementsByTagName('*');  
+  docElements = Array.prototype.slice.call(docElements); 
+  
+  var results = [];
+
+  function matchFinder(arr){
+      for(var i = 0; i < arr.length; i++){
+        if(arr[i].className.indexOf(className) > -1){
+          results.push(arr[i]);
+        }
+        if(Array.isArray(arr[i])){
+          matchFinder(arr[i]);
+        }
+      }
+  }
+  matchFinder(docElements);
+  return results;
 };
-
-
-// Create array of results.
-// Iterate over HTMLCollection
-// If a child element has the given class, push to results array.
-// Return the array.
