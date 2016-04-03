@@ -1,9 +1,4 @@
-// this is what you would do if you liked things to be easy:
-// var stringifyJSON = JSON.stringify;
-
-// but you don't so you're going to write it from scratch:
-
-var stringifyJSON = function(obj) {
+var stringifyJSON = function (obj) {
   var str = '';
 
   // handle string
@@ -11,31 +6,31 @@ var stringifyJSON = function(obj) {
     str += '"' + obj + '"';
 
   // handle number
-  }else if(Object.prototype.toString.call(obj) === '[object Number]') {
+  } else if (Object.prototype.toString.call(obj) === '[object Number]') {
     str += obj.toString();
 
   // handle true
-  }else if(obj === Boolean(true)){
+  } else if(obj === Boolean(true)) {
     str+= 'true';
 
   // handle false
-  }else if(obj === Boolean(false)){
+  } else if(obj === Boolean(false)) {
     str+= 'false';
 
   // handle null
-  }else if(Object.prototype.toString.call(obj) === '[object Null]'){
+  } else if (Object.prototype.toString.call(obj) === '[object Null]') {
     str+= 'null';
   }
 
   // handle arrays
-  if(Object.prototype.toString.call(obj) === '[object Array]') {
-    
+  if (Object.prototype.toString.call(obj) === '[object Array]') {
+
     // handle empty array
-    if(obj.length === 0){
+    if (obj.length === 0) {
       str += '[]';
-    }else{
+    } else {
       str += '[';
-      for(var i = 0; i < obj.length; i++){
+      for (var i = 0; i < obj.length; i++) {
         str += stringifyJSON(obj[i]) + ',';
       }
       str += ']';
@@ -43,20 +38,24 @@ var stringifyJSON = function(obj) {
   }
 
   // handle objects
-  if(Object.prototype.toString.call(obj) === '[object Object]') {
+  if (Object.prototype.toString.call(obj) === '[object Object]') {
 
     // handle empty objects
-    if(Object.keys(obj).length === 0){
+    if (Object.keys(obj).length === 0) {
       str += '{}';
-    }else{
+    } else {
       str+= '{';
       for(var key in obj){
 
         // handle functions
-        if (typeof obj[key] === 'function'){continue;}
+        if (typeof obj[key] === 'function') {
+          continue;
+        }
 
         // handle undefined
-        if (typeof obj[key] === 'undefined'){continue;}
+        if (typeof obj[key] === 'undefined') {
+          continue;
+        }
 
         str += '"' + key + '":';
         str += stringifyJSON(obj[key]) + ',';
@@ -69,5 +68,5 @@ var stringifyJSON = function(obj) {
   str = str.replace(/,}/, '}');
   str = str.replace(/,]/, ']');
 
-  return str;    
+  return str;
 };
